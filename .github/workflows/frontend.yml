@@ -99,7 +99,7 @@ jobs:
         run: bun install --frozen-lockfile
 
       - name: Format
-        run: bun run check-format
+        run: bun run format
 
   # containerize:
   #   runs-on: "ubuntu-latest"
