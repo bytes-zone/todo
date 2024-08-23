@@ -1,4 +1,4 @@
-interface TodoV1 {
+export interface TodoV1 {
   id: string
   title: string
   notes: string
@@ -15,6 +15,6 @@ interface TodoV1 {
   // TODO: parent/child relationships
 }
 
-interface AppV1 {
+export interface AppV1 {
   todos: { [id: string]: TodoV1 }
 }
