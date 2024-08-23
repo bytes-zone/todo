@@ -1,3 +1,8 @@
-<script setup lang="ts"></script>
+<script setup lang="ts">
+import { init, useDocument } from './lib/use-automerge'
 
-<template>Howdy</template>
+const handle = await init({})
+const doc = await useDocument(handle)
+</script>
+
+<template>{{ JSON.stringify(doc) }}</template>
