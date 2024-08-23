@@ -7,10 +7,10 @@
   outputs = inputs:
     inputs.flake-utils.lib.eachDefaultSystem (system:
       let pkgs = import inputs.nixpkgs { inherit system; };
-      in { 
+      in {
         formatter = pkgs.nixpkgs-fmt;
 
-        devShell = pkgs.mkShell { packages = [ pkgs.bun ]; };
+        devShell = pkgs.mkShell { packages = [ pkgs.bun pkgs.nodejs ]; };
       }
     );
 }
