@@ -15,6 +15,12 @@
     "format": "prettier --write src/"
   },
   "dependencies": {
+    "@automerge/automerge": "^2.2.8",
+    "@automerge/automerge-repo": "^1.2.1",
+    "@automerge/automerge-repo-network-broadcastchannel": "^1.2.1",
+    "@automerge/automerge-repo-storage-indexeddb": "^1.2.1",
+    "vite-plugin-top-level-await": "^1.4.4",
+    "vite-plugin-wasm": "^3.3.0",
     "vue": "^3.4.29",
     "vue-router": "^4.3.3"
   },
