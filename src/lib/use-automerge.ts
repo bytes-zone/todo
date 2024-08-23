@@ -1,5 +1,25 @@
-import type { Doc, DocHandle } from '@automerge/automerge-repo'
+import { type AnyDocumentId, Repo, type Doc, type DocHandle } from '@automerge/automerge-repo'
+import { BroadcastChannelNetworkAdapter } from '@automerge/automerge-repo-network-broadcastchannel'
+import { IndexedDBStorageAdapter } from '@automerge/automerge-repo-storage-indexeddb'
 import { ref, type Ref } from 'vue'
+
+const documentIdKey = 'documentId'
+
+export async function init<T>(initialValue: T): Promise<DocHandle<T>> {
+  const repo = new Repo({
+    storage: new IndexedDBStorageAdapter(),
+    network: [new BroadcastChannelNetworkAdapter()]
+  })
+
+  const documentId = localStorage.getItem(documentIdKey)
+  if (documentId) {
+    return repo.find(documentId as AnyDocumentId)
+  } else {
+    const handle = repo.create(initialValue)
+    localStorage.setItem(documentIdKey, handle.documentId)
+    return handle
+  }
+}
 
 export async function useDocument<T>(handle: DocHandle<T>): Promise<Ref<Doc<T>>> {
   const initial = await handle.doc()
