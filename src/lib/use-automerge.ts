@@ -25,7 +25,7 @@ export async function init<T>(initialValue: T): Promise<DocHandle<T>> {
   }
 }
 
-export async function useDocument<T>(handle: DocHandle<T>): Promise<Ref<Doc<T>>> {
+export async function useDocument<T>(handle: DocHandle<T>): Promise<Ref<Readonly<Doc<T>>>> {
   const initial = await handle.doc()
 
   if (!initial) {
@@ -36,7 +36,7 @@ export async function useDocument<T>(handle: DocHandle<T>): Promise<Ref<Doc<T>>>
   // doesn't contain a ref. This is not the safest thing in the world, but it
   // does work. (And I think Automerge would object if you put a ref in a
   // document anyway.)
-  const doc = ref(initial) as Ref<Doc<T>>
+  const doc = ref(initial) as Ref<Readonly<Doc<T>>>
 
   handle.on('change', (payload) => (doc.value = payload.doc))
 
