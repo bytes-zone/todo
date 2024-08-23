@@ -5,4 +5,8 @@ const handle = await init({ message: 'Howdy' })
 const doc = await useDocument(handle)
 </script>
 
-<template>{{ JSON.stringify(doc) }}</template>
+<template>
+  <p class="font-mono">
+    {{ JSON.stringify(doc) }}
+  </p>
+</template>
