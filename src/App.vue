@@ -24,4 +24,8 @@ function addTodo(ev: Event) {
       Add
     </button>
   </form>
+
+  <ul v-for="todo in Object.values(doc.todos)" :key="todo.id">
+    <li>{{ JSON.stringify(todo) }}</li>
+  </ul>
 </template>
