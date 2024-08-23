@@ -19,6 +19,7 @@
     "@automerge/automerge-repo": "^1.2.1",
     "@automerge/automerge-repo-network-broadcastchannel": "^1.2.1",
     "@automerge/automerge-repo-storage-indexeddb": "^1.2.1",
+    "uuid": "^10.0.0",
     "vue": "^3.4.29",
     "vue-router": "^4.3.3"
   },
