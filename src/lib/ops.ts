@@ -8,10 +8,11 @@ export function init(): AppV1 {
   }
 }
 
-export function addTodo(doc: AppV1, title: string): void {
-  const newId = uuid() as TodoId
-  doc.todos[newId] = {
-    id: newId,
+export function addTodo(doc: AppV1, title: string): TodoId {
+  const id = uuid() as TodoId
+
+  doc.todos[id] = {
+    id,
     title,
     notes: '',
     tags: [],
@@ -19,4 +20,6 @@ export function addTodo(doc: AppV1, title: string): void {
     completed: null,
     children: []
   }
+
+  return id
 }

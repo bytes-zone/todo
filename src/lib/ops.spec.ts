@@ -7,6 +7,6 @@ describe('init', () => {
   })
 
   it('should have root todos', () => {
-    expect(ops.init().rootTodos).toEqual({})
+    expect(ops.init().rootTodos).toEqual([])
   })
 })
