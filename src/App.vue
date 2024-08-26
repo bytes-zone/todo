@@ -18,7 +18,10 @@ function addTodo(ev: Event) {
 
 <template>
   <form @submit="addTodo" class="join">
-    <input v-model="newTodo" class="join-item input input-bordered" />
+    <label class="input input-bordered join-item flex items-center gap-2">
+      New Todo
+      <input v-model="newTodo" class="grow" />
+    </label>
     <button :disabled="!validNewTodo" class="join-item btn btn-primary">Add</button>
   </form>
 
