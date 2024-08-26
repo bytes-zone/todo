@@ -1,5 +1,10 @@
+type Brand<K, T> = K & { __brand: T }
+export type TodoId = Brand<string, 'TodoId'>
+
+export type OrderedTodos = TodoId[]
+
 export interface TodoV1 {
-  id: string
+  id: TodoId
   title: string
   notes: string
   tags: string[]
@@ -11,10 +16,12 @@ export interface TodoV1 {
   targetDate?: Date
   lastProgressDate?: Date
 
+  children: OrderedTodos
+
   // TODO: repetitions
-  // TODO: parent/child relationships
 }
 
 export interface AppV1 {
   todos: { [id: string]: TodoV1 }
+  rootTodos: OrderedTodos
 }
