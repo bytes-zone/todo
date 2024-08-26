@@ -1,9 +1,7 @@
 type Brand<K, T> = K & { __brand: T }
 export type TodoId = Brand<string, 'TodoId'>
 
-export interface OrderedTodos {
-  [id: TodoId]: number
-}
+export type OrderedTodos = TodoId[]
 
 export interface TodoV1 {
   id: TodoId

@@ -4,7 +4,7 @@ import { type AppV1, type TodoId } from './types'
 export function init(): AppV1 {
   return {
     todos: {},
-    rootTodos: {}
+    rootTodos: []
   }
 }
 
@@ -17,6 +17,6 @@ export function addTodo(doc: AppV1, title: string): void {
     tags: [],
     added: new Date(),
     completed: null,
-    children: {}
+    children: []
   }
 }
