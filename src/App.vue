@@ -14,6 +14,10 @@ function addTodo(ev: Event) {
   handle.change((d) => ops.addTodo(d, newTodo.value))
   newTodo.value = ''
 }
+
+function completeTodo(id: string, complete: boolean) {
+  handle.change((d) => ops.completeTodo(d, id, complete))
+}
 </script>
 
 <template>
@@ -26,6 +30,6 @@ function addTodo(ev: Event) {
   </form>
 
   <ul v-for="id in doc.rootTodos" :key="id">
-    <li><TodoCompact :todo="doc.todos[id]" /></li>
+    <li><TodoCompact :todo="doc.todos[id]" :on-complete="completeTodo" /></li>
   </ul>
 </template>
