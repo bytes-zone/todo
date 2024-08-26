@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { computed, ref } from 'vue'
-import { type AppV1 } from './lib/types'
+import { type AppV1, type TodoId } from './lib/types'
 import { init, useDocument } from './lib/use-automerge'
 import * as uuid from 'uuid'
 
@@ -12,7 +12,7 @@ const validNewTodo = computed(() => newTodo.value.trim().length > 0)
 function addTodo(ev: Event) {
   ev.preventDefault()
   handle.change((d) => {
-    const newId = uuid.v7()
+    const newId = uuid.v7() as TodoId
     d.todos[newId] = {
       id: newId,
       title: newTodo.value,

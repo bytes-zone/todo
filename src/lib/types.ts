@@ -1,5 +1,8 @@
+type Brand<K, T> = K & { __brand: T }
+export type TodoId = Brand<string, 'TodoId'>
+
 export interface TodoV1 {
-  id: string
+  id: TodoId
   title: string
   notes: string
   tags: string[]
