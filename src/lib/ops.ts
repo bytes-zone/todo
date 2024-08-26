@@ -1,4 +1,4 @@
-import { uuid } from '@automerge/automerge'
+import { uuid } from '@automerge/automerge/slim'
 import { type AppV1, type TodoId } from './types'
 
 export function init(): AppV1 {
