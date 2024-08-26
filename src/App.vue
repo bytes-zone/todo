@@ -26,6 +26,6 @@ function addTodo(ev: Event) {
   </form>
 
   <ul v-for="id in doc.rootTodos" :key="id">
-    <li>{{ doc.todos[id] }}</li>
+    <li><TodoCompact :todo="doc.todos[id]" /></li>
   </ul>
 </template>
