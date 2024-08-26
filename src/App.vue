@@ -17,14 +17,12 @@ function addTodo(ev: Event) {
 </script>
 
 <template>
-  <form @submit="addTodo" class="flex">
-    <input v-model="newTodo" class="border-indigo-500 border-2 rounded-l-md px-2 grow" />
-    <button
-      :disabled="!validNewTodo"
-      class="rounded-r-md bg-indigo-600 px-2.5 py-1.5 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 disabled:bg-indigo-300 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
-    >
-      Add
-    </button>
+  <form @submit="addTodo" class="join">
+    <label class="input input-bordered join-item flex items-center gap-2">
+      New Todo
+      <input v-model="newTodo" class="grow" />
+    </label>
+    <button :disabled="!validNewTodo" class="join-item btn btn-primary">Add</button>
   </form>
 
   <ul v-for="id in doc.rootTodos" :key="id">
