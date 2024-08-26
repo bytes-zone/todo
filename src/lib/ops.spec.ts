@@ -10,3 +10,24 @@ describe('init', () => {
     expect(ops.init().rootTodos).toEqual([])
   })
 })
+
+describe('addTodo', () => {
+  it('should add a todo', () => {
+    const state = ops.init()
+
+    const newId = ops.addTodo(state, 'Hey there')
+    const newTodo = state.todos[newId]
+
+    expect(newTodo).toBeDefined()
+    expect(newTodo.title).toBe('Hey there')
+  })
+
+  it('should add the todo to the root list', () => {
+    const state = ops.init()
+
+    const newId = ops.addTodo(state, 'Hey there')
+
+    expect(state.todos[newId]).toBeDefined()
+    expect(state.rootTodos).toContain(newId)
+  })
+})

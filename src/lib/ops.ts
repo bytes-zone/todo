@@ -21,5 +21,7 @@ export function addTodo(doc: AppV1, title: string): TodoId {
     children: []
   }
 
+  doc.rootTodos.push(id)
+
   return id
 }
