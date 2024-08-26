@@ -13,7 +13,7 @@ defineProps<{
       type="checkbox"
       :checked="todo.completed !== null"
       class="checkbox"
-      :aria-label="todo.completed ? 'Mark complete' : 'Mark incomplete'"
+      :aria-label="todo.completed ? 'Mark incomplete' : 'Mark complete'"
       @change="onComplete(todo.id, !todo.completed)"
     />
     <span>{{ todo.title }}</span>
