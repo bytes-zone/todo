@@ -31,3 +31,24 @@ describe('addTodo', () => {
     expect(state.rootTodos).toContain(newId)
   })
 })
+
+describe('completeTodo', () => {
+  it('should mark a todo as complete', () => {
+    const state = ops.init()
+    const newId = ops.addTodo(state, 'Hey there')
+
+    ops.toggleComplete(state, newId)
+
+    expect(state.todos[newId].completed).toBeDefined()
+  })
+
+  it('should mark a todo as incomplete', () => {
+    const state = ops.init()
+    const newId = ops.addTodo(state, 'Hey there')
+
+    ops.toggleComplete(state, newId)
+    ops.toggleComplete(state, newId)
+
+    expect(state.todos[newId].completed).toBeNull()
+  })
+})

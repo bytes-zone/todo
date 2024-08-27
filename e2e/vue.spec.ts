@@ -15,13 +15,19 @@ const machine = createMachine({
         addTodos: 'withTodos'
       }
     },
-    withTodos: {}
+    withTodos: {
+      on: {
+        completeTodo: 'completedTodo'
+      }
+    },
+    completedTodo: {}
   }
 })
 
 const testModel = createTestModel(machine)
 
 const testTodos = ['Clean the carpets', 'Install the new warp core', 'World domination']
+const toComplete = testTodos[0]
 
 testModel.getShortestPaths().forEach((path) => {
   test(`${path.description}`, async ({ page }) => {
@@ -36,6 +42,11 @@ testModel.getShortestPaths().forEach((path) => {
             await expect(page.getByText(todo)).toBeVisible()
           }
         },
+        completedTodo: async () => {
+          await expect(
+            page.locator('li').filter({ hasText: toComplete }).getByRole('checkbox')
+          ).toBeChecked()
+        },
         '*': (state) => {
           throw new Error(`Unimplemented: ${state.value}`)
         }
@@ -49,6 +60,13 @@ testModel.getShortestPaths().forEach((path) => {
             await form.getByLabel('New Todo').fill(todo)
             await form.getByRole('button', { name: 'Add' }).click()
           }
+        },
+        completeTodo: async () => {
+          await page
+            .locator('li')
+            .filter({ hasText: toComplete })
+            .getByLabel('Mark complete')
+            .check()
         }
       }
     })

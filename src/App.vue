@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { computed, ref } from 'vue'
-import { type AppV1 } from './lib/types'
+import { type AppV1, type TodoId } from './lib/types'
 import { init, useDocument } from './lib/use-automerge'
 import * as ops from './lib/ops'
 
@@ -14,6 +14,10 @@ function addTodo(ev: Event) {
   handle.change((d) => ops.addTodo(d, newTodo.value))
   newTodo.value = ''
 }
+
+function completeTodo(id: TodoId) {
+  handle.change((d) => ops.toggleComplete(d, id))
+}
 </script>
 
 <template>
@@ -26,6 +30,6 @@ function addTodo(ev: Event) {
   </form>
 
   <ul v-for="id in doc.rootTodos" :key="id">
-    <li>{{ doc.todos[id] }}</li>
+    <li><TodoCompact :todo="doc.todos[id]" @toggle-complete="completeTodo" /></li>
   </ul>
 </template>
