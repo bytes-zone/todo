@@ -11,7 +11,7 @@ defineEmits<{
 </script>
 
 <template>
-  <div class="flex gap-2 form-control">
+  <div class="flex flex-row gap-2 form-control">
     <input
       type="checkbox"
       :checked="todo.completed !== null"
