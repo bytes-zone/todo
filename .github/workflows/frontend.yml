@@ -86,6 +86,8 @@ jobs:
 
       - name: Chromatic
         run: bunx chromatic --auto-accept-changes main --exit-once-uploaded --exit-zero-on-changes
+        env:
+          CHROMATIC_PROJECT_TOKEN: ${{ secrets.CHROMATIC_PROJECT_TOKEN }}
 
       - uses: actions/upload-artifact@v4
         if: ${{ !cancelled() }}
