@@ -14,7 +14,7 @@ const preview: Preview = {
     chromatic: {
       modes: {
         light: { theme: "light" },
-        dark: { theme: "dracula" },
+        dark: { theme: "dark" },
       },
     },
   },
