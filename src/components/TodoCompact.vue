@@ -19,8 +19,6 @@ defineEmits<{
       :aria-label="todo.completed ? 'Mark incomplete' : 'Mark complete'"
       @change="$emit('toggleComplete', todo.id)"
     />
-    <span :class="todo.completed ? 'line-through opacity-75 decoration-primary' : ''">{{
-      todo.title
-    }}</span>
+    <span :class="todo.completed ? 'opacity-50 line-through' : ''">{{ todo.title }}</span>
   </div>
 </template>
