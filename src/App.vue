@@ -1,5 +1,4 @@
 <script setup lang="ts">
-import { computed, ref } from "vue"
 import { type AppV1, type TodoId } from "./lib/types"
 import { init, useDocument } from "./lib/use-automerge"
 import * as ops from "./lib/ops"
@@ -7,12 +6,8 @@ import * as ops from "./lib/ops"
 const handle = await init<AppV1>(ops.init())
 const doc = await useDocument(handle)
 
-const newTodo = ref("")
-const validNewTodo = computed(() => newTodo.value.trim().length > 0)
-function addTodo(ev: Event) {
-  ev.preventDefault()
-  handle.change((d) => ops.addTodo(d, newTodo.value))
-  newTodo.value = ""
+function addTodo(title: string) {
+  handle.change((d) => ops.addTodo(d, title))
 }
 
 function completeTodo(id: TodoId) {
@@ -21,15 +16,11 @@ function completeTodo(id: TodoId) {
 </script>
 
 <template>
-  <form @submit="addTodo" class="join">
-    <label class="input input-bordered join-item flex items-center gap-2">
-      New Todo
-      <input v-model="newTodo" class="grow" />
-    </label>
-    <button :disabled="!validNewTodo" class="join-item btn btn-primary">Add</button>
-  </form>
+  <NewTodoForm @add-todo="addTodo" />
 
-  <ul v-for="id in doc.rootTodos" :key="id">
-    <li><TodoCompact :todo="doc.todos[id]" @toggle-complete="completeTodo" /></li>
+  <ul class="flex flex-col gap-2">
+    <li v-for="id in doc.rootTodos" :key="id">
+      <TodoCompact :todo="doc.todos[id]" @toggle-complete="completeTodo" />
+    </li>
   </ul>
 </template>
