@@ -19,7 +19,9 @@ function completeTodo(id: TodoId) {
 <template>
   <NewTodoForm @add-todo="addTodo" />
 
-  <ul v-for="id in doc.rootTodos" :key="id">
-    <li><TodoCompact :todo="doc.todos[id]" @toggle-complete="completeTodo" /></li>
+  <ul class="flex flex-col gap-2">
+    <li v-for="id in doc.rootTodos" :key="id">
+      <TodoCompact :todo="doc.todos[id]" @toggle-complete="completeTodo" />
+    </li>
   </ul>
 </template>
