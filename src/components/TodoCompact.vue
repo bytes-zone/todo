@@ -15,10 +15,12 @@ defineEmits<{
     <input
       type="checkbox"
       :checked="todo.completed !== null"
-      class="checkbox"
+      class="checkbox checkbox-primary"
       :aria-label="todo.completed ? 'Mark incomplete' : 'Mark complete'"
       @change="$emit('toggleComplete', todo.id)"
     />
-    <span>{{ todo.title }}</span>
+    <span :class="todo.completed ? 'line-through opacity-75 decoration-primary' : ''">{{
+      todo.title
+    }}</span>
   </div>
 </template>
