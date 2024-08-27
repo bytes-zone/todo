@@ -12,4 +12,5 @@ export default {
     themes: ["emerald", "dracula"],
     darkTheme: "dracula",
   },
+  darkMode: ["selector", '[data-theme="dracula"]'],
 } satisfies Config
