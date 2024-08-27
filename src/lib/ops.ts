@@ -5,6 +5,7 @@ export function init(): AppV1 {
   return {
     todos: {},
     rootTodos: [],
+    stack: [],
   }
 }
 

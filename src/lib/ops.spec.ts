@@ -9,6 +9,10 @@ describe("init", () => {
   it("should have root todos", () => {
     expect(ops.init().rootTodos).toEqual([])
   })
+
+  it("should have the current stack", () => {
+    expect(ops.init().stack).toEqual([])
+  })
 })
 
 describe("addTodo", () => {
