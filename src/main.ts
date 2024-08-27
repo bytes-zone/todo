@@ -1,10 +1,10 @@
 import "./assets/main.css"
 
 import { createApp } from "vue"
-import AppShell from "./AppShell.vue"
+import App from "./App.vue"
 import router from "./router"
 
-const app = createApp(AppShell)
+const app = createApp(App)
 
 app.use(router)
 
