@@ -35,6 +35,7 @@ export function toggleComplete(d: AppV1, id: TodoId): void {
 
   if (!todo.completed) {
     todo.completed = new Date()
+    removeFromStack(d, id)
   } else {
     todo.completed = null
   }

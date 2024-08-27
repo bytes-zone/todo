@@ -55,6 +55,16 @@ describe("completeTodo", () => {
 
     expect(state.todos[newId].completed).toBeNull()
   })
+
+  it("if the todo was on the stack, completing it removes it", () => {
+    const state = ops.init()
+    const newId = ops.addTodo(state, "Hey there")
+
+    ops.addToStack(state, newId)
+    ops.toggleComplete(state, newId)
+
+    expect(state.stack).not.toContain(newId)
+  })
 })
 
 describe("addToStack", () => {
