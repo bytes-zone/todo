@@ -1,7 +1,7 @@
 import type { Preview } from "@storybook/vue3"
 import "../src/assets/main.css"
 
-import { withThemeByClassName } from "@storybook/addon-themes"
+import { withThemeByDataAttribute } from "@storybook/addon-themes"
 
 const preview: Preview = {
   parameters: {
@@ -14,7 +14,7 @@ const preview: Preview = {
   },
 
   decorators: [
-    withThemeByClassName({
+    withThemeByDataAttribute({
       themes: {
         // nameOfTheme: 'classNameForTheme',
         light: "",
