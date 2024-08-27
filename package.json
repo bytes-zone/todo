@@ -21,8 +21,10 @@
     "@automerge/automerge-repo": "^1.2.1",
     "@automerge/automerge-repo-network-broadcastchannel": "^1.2.1",
     "@automerge/automerge-repo-storage-indexeddb": "^1.2.1",
+    "@xstate/vue": "^3.1.2",
     "vue": "^3.4.29",
-    "vue-router": "^4.3.3"
+    "vue-router": "^4.3.3",
+    "xstate": "^5.17.4"
   },
   "devDependencies": {
     "@chromatic-com/storybook": "^1.7.0",
@@ -67,7 +69,6 @@
     "vite-plugin-vue-devtools": "^7.3.1",
     "vite-plugin-wasm": "^3.3.0",
     "vitest": "^2.0.0",
-    "vue-tsc": "^2.0.21",
-    "xstate": "^5.17.4"
+    "vue-tsc": "^2.0.21"
   }
 }
