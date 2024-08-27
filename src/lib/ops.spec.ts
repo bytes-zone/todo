@@ -56,3 +56,39 @@ describe("completeTodo", () => {
     expect(state.todos[newId].completed).toBeNull()
   })
 })
+
+describe("addToStack", () => {
+  it("should add a todo to the stack", () => {
+    const state = ops.init()
+    const newId = ops.addTodo(state, "Hey there")
+
+    ops.addToStack(state, newId)
+
+    expect(state.stack).toContain(newId)
+  })
+
+  it("should add multiple todos to the stack", () => {
+    const state = ops.init()
+    const id1 = ops.addTodo(state, "Todo 1")
+    const id2 = ops.addTodo(state, "Todo 2")
+    const id3 = ops.addTodo(state, "Todo 3")
+
+    ops.addToStack(state, id1)
+    ops.addToStack(state, id2)
+    ops.addToStack(state, id3)
+
+    expect(state.stack).toContain(id1)
+    expect(state.stack).toContain(id2)
+    expect(state.stack).toContain(id3)
+  })
+
+  it("should not add duplicate todos to the stack", () => {
+    const state = ops.init()
+    const newId = ops.addTodo(state, "Hey there")
+
+    ops.addToStack(state, newId)
+    ops.addToStack(state, newId)
+
+    expect(state.stack.filter((id) => id === newId)).toHaveLength(1)
+  })
+})

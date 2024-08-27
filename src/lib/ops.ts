@@ -39,3 +39,9 @@ export function toggleComplete(d: AppV1, id: TodoId): void {
     todo.completed = null
   }
 }
+
+export function addToStack(d: AppV1, id: TodoId): void {
+  if (!d.stack.includes(id)) {
+    d.stack.push(id)
+  }
+}
