@@ -14,7 +14,7 @@ const preview: Preview = {
     chromatic: {
       modes: {
         light: { theme: "light" },
-        dark: { theme: "dark" },
+        dark: { theme: "dracula" },
       },
     },
   },
@@ -22,9 +22,8 @@ const preview: Preview = {
   decorators: [
     withThemeByDataAttribute({
       themes: {
-        // nameOfTheme: 'classNameForTheme',
         light: "",
-        dark: "dark",
+        dark: "dracula",
       },
       defaultTheme: "light",
     }),
