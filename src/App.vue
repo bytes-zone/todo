@@ -7,12 +7,8 @@ import * as ops from "./lib/ops"
 const handle = await init<AppV1>(ops.init())
 const doc = await useDocument(handle)
 
-const newTodo = ref("")
-const validNewTodo = computed(() => newTodo.value.trim().length > 0)
-function addTodo(ev: Event) {
-  ev.preventDefault()
-  handle.change((d) => ops.addTodo(d, newTodo.value))
-  newTodo.value = ""
+function addTodo(title: string) {
+  handle.change((d) => ops.addTodo(d, title))
 }
 
 function completeTodo(id: TodoId) {
@@ -21,13 +17,7 @@ function completeTodo(id: TodoId) {
 </script>
 
 <template>
-  <form @submit="addTodo" class="join">
-    <label class="input input-bordered join-item flex items-center gap-2">
-      New Todo
-      <input v-model="newTodo" class="grow" />
-    </label>
-    <button :disabled="!validNewTodo" class="join-item btn btn-primary">Add</button>
-  </form>
+  <NewTodoForm @add-todo="addTodo" />
 
   <ul v-for="id in doc.rootTodos" :key="id">
     <li><TodoCompact :todo="doc.todos[id]" @toggle-complete="completeTodo" /></li>
