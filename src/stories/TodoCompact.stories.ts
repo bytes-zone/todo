@@ -14,6 +14,7 @@ const todo: TodoV1 = {
 }
 
 const meta = {
+  tags: ["autodocs"],
   component: TodoCompact,
   args: {
     todo,

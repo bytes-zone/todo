@@ -3,6 +3,7 @@ import { fn } from "@storybook/test"
 import NewTodoForm from "@/components/NewTodoForm.vue"
 
 const meta = {
+  tags: ["autodocs"],
   component: NewTodoForm,
   args: {
     onAddTodo: fn(),
