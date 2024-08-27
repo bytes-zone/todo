@@ -45,3 +45,12 @@ export function addToStack(d: AppV1, id: TodoId): void {
     d.stack.push(id)
   }
 }
+
+export function removeFromStack(d: AppV1, id: TodoId): void {
+  // This is a bit roundabout because we need to make an in-place update, not
+  // construct a new list (as we would with `filter`.)
+  const index = d.stack.indexOf(id)
+  if (index !== -1) {
+    d.stack.splice(index, 1)
+  }
+}

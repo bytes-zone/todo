@@ -92,3 +92,42 @@ describe("addToStack", () => {
     expect(state.stack.filter((id) => id === newId)).toHaveLength(1)
   })
 })
+
+describe("removeFromStack", () => {
+  it("should remove a todo from the stack", () => {
+    const state = ops.init()
+    const newId = ops.addTodo(state, "Hey there")
+
+    ops.addToStack(state, newId)
+    expect(state.stack).toContain(newId)
+
+    ops.removeFromStack(state, newId)
+    expect(state.stack).not.toContain(newId)
+  })
+
+  it("should remove the correct todo from the stack", () => {
+    const state = ops.init()
+    const id1 = ops.addTodo(state, "Todo 1")
+    const id2 = ops.addTodo(state, "Todo 2")
+    const id3 = ops.addTodo(state, "Todo 3")
+
+    ops.addToStack(state, id1)
+    ops.addToStack(state, id2)
+    ops.addToStack(state, id3)
+
+    ops.removeFromStack(state, id2)
+
+    expect(state.stack).toContain(id1)
+    expect(state.stack).not.toContain(id2)
+    expect(state.stack).toContain(id3)
+  })
+
+  it("should not remove a todo from the stack if it is not present", () => {
+    const state = ops.init()
+    const newId = ops.addTodo(state, "Hey there")
+
+    ops.removeFromStack(state, newId)
+
+    expect(state.stack).not.toContain(newId)
+  })
+})
