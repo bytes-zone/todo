@@ -26,13 +26,13 @@ export function addTodo(doc: AppV1, title: string): TodoId {
   return id
 }
 
-export function completeTodo(d: AppV1, id: string, complete: boolean): void {
+export function toggleComplete(d: AppV1, id: string): void {
   const todo = d.todos[id]
   if (!todo) {
     throw new Error(`Todo with ID ${id} not found.`)
   }
 
-  if (complete) {
+  if (!todo.completed) {
     todo.completed = new Date()
   } else {
     todo.completed = null

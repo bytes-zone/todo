@@ -1,9 +1,12 @@
 <script setup lang="ts">
-import { type TodoV1 } from '../lib/types'
+import { type TodoId, type TodoV1 } from '../lib/types'
 
 defineProps<{
   todo: TodoV1
-  onComplete: (id: string, complete: boolean) => void
+}>()
+
+defineEmits<{
+  toggleComplete: [id: TodoId]
 }>()
 </script>
 
@@ -14,7 +17,7 @@ defineProps<{
       :checked="todo.completed !== null"
       class="checkbox"
       :aria-label="todo.completed ? 'Mark incomplete' : 'Mark complete'"
-      @change="onComplete(todo.id, !todo.completed)"
+      @change="$emit('toggleComplete', todo.id)"
     />
     <span>{{ todo.title }}</span>
   </div>

@@ -37,7 +37,7 @@ describe('completeTodo', () => {
     const state = ops.init()
     const newId = ops.addTodo(state, 'Hey there')
 
-    ops.completeTodo(state, newId, true)
+    ops.toggleComplete(state, newId)
 
     expect(state.todos[newId].completed).toBeDefined()
   })
@@ -46,8 +46,8 @@ describe('completeTodo', () => {
     const state = ops.init()
     const newId = ops.addTodo(state, 'Hey there')
 
-    ops.completeTodo(state, newId, true)
-    ops.completeTodo(state, newId, false)
+    ops.toggleComplete(state, newId)
+    ops.toggleComplete(state, newId)
 
     expect(state.todos[newId].completed).toBeNull()
   })
