@@ -27,3 +27,12 @@ export default meta
 type Story = StoryObj<typeof meta>
 
 export const Primary: Story = {}
+
+export const Done: Story = {
+  args: {
+    todo: {
+      ...todo,
+      completed: new Date(2024, 1, 2),
+    },
+  },
+}

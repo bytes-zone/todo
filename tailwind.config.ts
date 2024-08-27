@@ -8,4 +8,9 @@ export default {
     extend: {},
   },
   plugins: [typography, daisyui],
+  daisyui: {
+    themes: ["emerald", "dracula"],
+    darkTheme: "dracula",
+  },
+  darkMode: ["selector", '[data-theme="dracula"]'],
 } satisfies Config
