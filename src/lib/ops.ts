@@ -27,7 +27,7 @@ export function addTodo(doc: AppV1, title: string): TodoId {
   return id
 }
 
-export function toggleComplete(d: AppV1, id: string): void {
+export function toggleComplete(d: AppV1, id: TodoId): void {
   const todo = d.todos[id]
   if (!todo) {
     throw new Error(`Todo with ID ${id} not found.`)
