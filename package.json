@@ -32,6 +32,7 @@
     "@storybook/addon-interactions": "^8.2.9",
     "@storybook/addon-links": "^8.2.9",
     "@storybook/addon-onboarding": "^8.2.9",
+    "@storybook/addon-styling-webpack": "^1.0.0",
     "@storybook/blocks": "^8.2.9",
     "@storybook/test": "^8.2.9",
     "@storybook/vue3": "^8.2.9",
