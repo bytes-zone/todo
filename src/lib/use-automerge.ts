@@ -1,18 +1,18 @@
-import { type AnyDocumentId, Repo, type Doc, type DocHandle } from '@automerge/automerge-repo/slim'
-import { BroadcastChannelNetworkAdapter } from '@automerge/automerge-repo-network-broadcastchannel'
-import { IndexedDBStorageAdapter } from '@automerge/automerge-repo-storage-indexeddb'
-import { ref, type Ref } from 'vue'
-import * as A from '@automerge/automerge/slim'
-import wasmUrl from '@automerge/automerge/automerge.wasm?url'
+import { type AnyDocumentId, Repo, type Doc, type DocHandle } from "@automerge/automerge-repo/slim"
+import { BroadcastChannelNetworkAdapter } from "@automerge/automerge-repo-network-broadcastchannel"
+import { IndexedDBStorageAdapter } from "@automerge/automerge-repo-storage-indexeddb"
+import { ref, type Ref } from "vue"
+import * as A from "@automerge/automerge/slim"
+import wasmUrl from "@automerge/automerge/automerge.wasm?url"
 
-const documentIdKey = 'documentId'
+const documentIdKey = "documentId"
 
 export async function init<T>(initialValue: T): Promise<DocHandle<T>> {
   await A.initializeWasm(wasmUrl)
 
   const repo = new Repo({
     storage: new IndexedDBStorageAdapter(),
-    network: [new BroadcastChannelNetworkAdapter()]
+    network: [new BroadcastChannelNetworkAdapter()],
   })
 
   const documentId = localStorage.getItem(documentIdKey)
@@ -38,7 +38,7 @@ export async function useDocument<T>(handle: DocHandle<T>): Promise<Ref<Readonly
   // document anyway.)
   const doc = ref(initial) as Ref<Readonly<Doc<T>>>
 
-  handle.on('change', (payload) => (doc.value = payload.doc))
+  handle.on("change", (payload) => (doc.value = payload.doc))
 
   return doc
 }

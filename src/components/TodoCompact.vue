@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { type TodoId, type TodoV1 } from '../lib/types'
+import { type TodoId, type TodoV1 } from "../lib/types"
 
 defineProps<{
   todo: TodoV1

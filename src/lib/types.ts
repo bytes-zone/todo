@@ -1,5 +1,5 @@
 type Brand<K, T> = K & { __brand: T }
-export type TodoId = Brand<string, 'TodoId'>
+export type TodoId = Brand<string, "TodoId">
 
 export type OrderedTodos = TodoId[]
 
