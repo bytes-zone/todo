@@ -1,50 +1,50 @@
-import { describe, expect, it } from 'vitest'
-import * as ops from './ops'
+import { describe, expect, it } from "vitest"
+import * as ops from "./ops"
 
-describe('init', () => {
-  it('should have todos', () => {
+describe("init", () => {
+  it("should have todos", () => {
     expect(ops.init().todos).toEqual({})
   })
 
-  it('should have root todos', () => {
+  it("should have root todos", () => {
     expect(ops.init().rootTodos).toEqual([])
   })
 })
 
-describe('addTodo', () => {
-  it('should add a todo', () => {
+describe("addTodo", () => {
+  it("should add a todo", () => {
     const state = ops.init()
 
-    const newId = ops.addTodo(state, 'Hey there')
+    const newId = ops.addTodo(state, "Hey there")
     const newTodo = state.todos[newId]
 
     expect(newTodo).toBeDefined()
-    expect(newTodo.title).toBe('Hey there')
+    expect(newTodo.title).toBe("Hey there")
   })
 
-  it('should add the todo to the root list', () => {
+  it("should add the todo to the root list", () => {
     const state = ops.init()
 
-    const newId = ops.addTodo(state, 'Hey there')
+    const newId = ops.addTodo(state, "Hey there")
 
     expect(state.todos[newId]).toBeDefined()
     expect(state.rootTodos).toContain(newId)
   })
 })
 
-describe('completeTodo', () => {
-  it('should mark a todo as complete', () => {
+describe("completeTodo", () => {
+  it("should mark a todo as complete", () => {
     const state = ops.init()
-    const newId = ops.addTodo(state, 'Hey there')
+    const newId = ops.addTodo(state, "Hey there")
 
     ops.toggleComplete(state, newId)
 
     expect(state.todos[newId].completed).toBeDefined()
   })
 
-  it('should mark a todo as incomplete', () => {
+  it("should mark a todo as incomplete", () => {
     const state = ops.init()
-    const newId = ops.addTodo(state, 'Hey there')
+    const newId = ops.addTodo(state, "Hey there")
 
     ops.toggleComplete(state, newId)
     ops.toggleComplete(state, newId)

@@ -1,10 +1,10 @@
-import { uuid } from '@automerge/automerge/slim'
-import { type AppV1, type TodoId } from './types'
+import { uuid } from "@automerge/automerge/slim"
+import { type AppV1, type TodoId } from "./types"
 
 export function init(): AppV1 {
   return {
     todos: {},
-    rootTodos: []
+    rootTodos: [],
   }
 }
 
@@ -14,11 +14,11 @@ export function addTodo(doc: AppV1, title: string): TodoId {
   doc.todos[id] = {
     id,
     title,
-    notes: '',
+    notes: "",
     tags: [],
     added: new Date(),
     completed: null,
-    children: []
+    children: [],
   }
 
   doc.rootTodos.push(id)

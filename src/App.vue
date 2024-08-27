@@ -1,18 +1,18 @@
 <script setup lang="ts">
-import { computed, ref } from 'vue'
-import { type AppV1, type TodoId } from './lib/types'
-import { init, useDocument } from './lib/use-automerge'
-import * as ops from './lib/ops'
+import { computed, ref } from "vue"
+import { type AppV1, type TodoId } from "./lib/types"
+import { init, useDocument } from "./lib/use-automerge"
+import * as ops from "./lib/ops"
 
 const handle = await init<AppV1>(ops.init())
 const doc = await useDocument(handle)
 
-const newTodo = ref('')
+const newTodo = ref("")
 const validNewTodo = computed(() => newTodo.value.trim().length > 0)
 function addTodo(ev: Event) {
   ev.preventDefault()
   handle.change((d) => ops.addTodo(d, newTodo.value))
-  newTodo.value = ''
+  newTodo.value = ""
 }
 
 function completeTodo(id: TodoId) {
