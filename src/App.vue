@@ -1,5 +1,4 @@
 <script setup lang="ts">
-import { computed, ref } from "vue"
 import { type AppV1, type TodoId } from "./lib/types"
 import { init, useDocument } from "./lib/use-automerge"
 import * as ops from "./lib/ops"
