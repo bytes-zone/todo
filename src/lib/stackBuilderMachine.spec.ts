@@ -88,7 +88,7 @@ describe("stackBuilderMachine", () => {
     expect(await event).toEqual({ type: "addToStack", id })
   })
 
-  it("answering yes should advance the index", async () => {
+  it("reviewing should advance the index", async () => {
     const doc = init()
     addTodo(doc, "A")
 
