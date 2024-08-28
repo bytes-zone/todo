@@ -1,4 +1,4 @@
-import { describe, expect, it, vi } from "vitest"
+import { describe, expect, it } from "vitest"
 import { init, addTodo, toggleComplete, addToStack } from "./ops"
 import { eligibleTodos, stackBuilderMachine, startingIndex } from "./stackBuilderMachine"
 import { createActor } from "xstate"
