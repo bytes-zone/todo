@@ -66,6 +66,8 @@ jobs:
 
       - name: Test
         run: bun run test:e2e --reporter=github --trace=on
+        env:
+          HOME: /root
 
       - uses: actions/upload-artifact@v4
         if: ${{ !cancelled() }}
