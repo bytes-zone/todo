@@ -1,4 +1,4 @@
-import { describe, expect, it } from "vitest"
+import { describe, expect, it, vi } from "vitest"
 import { init, addTodo, toggleComplete, addToStack } from "./ops"
 import { eligibleTodos, stackBuilderMachine, startingIndex } from "./stackBuilderMachine"
 import { createActor } from "xstate"
@@ -54,6 +54,7 @@ describe("startingIndex", () => {
     expect(startingIndex(doc, [a, b, c])).toEqual(1)
   })
 })
+
 describe("stackBuilderMachine", () => {
   it("should start in done if the doc is empty", () => {
     const doc = init()
@@ -69,5 +70,37 @@ describe("stackBuilderMachine", () => {
     const machine = createActor(stackBuilderMachine, { input: doc })
 
     expect(machine.getSnapshot().value).toEqual("reviewing")
+  })
+
+  it("should emit a message to add to the stack if we accept a todo", async () => {
+    const doc = init()
+    const id = addTodo(doc, "A")
+
+    const machine = createActor(stackBuilderMachine, { input: doc })
+    machine.start()
+
+    expect(machine.getSnapshot().value).toEqual("reviewing")
+
+    return new Promise((resolve) => {
+      machine.on("*", (ev) => {
+        expect(ev).toEqual({ type: "addToStack", id })
+        resolve(null)
+      })
+
+      machine.send({ type: "review", result: "yes" })
+    })
+  })
+
+  it("answering yes should advance the index", async () => {
+    const doc = init()
+    addTodo(doc, "A")
+
+    const machine = createActor(stackBuilderMachine, { input: doc })
+    machine.start()
+    const before = machine.getSnapshot().context.index
+
+    machine.send({ type: "review", result: "yes" })
+
+    expect(machine.getSnapshot().context.index).toEqual(before - 1)
   })
 })
