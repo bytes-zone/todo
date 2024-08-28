@@ -9,7 +9,7 @@ export function eligibleTodos(doc: AppV1): TodoId[] {
 }
 
 export function startingIndex(doc: AppV1, eligible: TodoId[]): number {
-  return Math.min(...doc.stack.map((id) => eligible.indexOf(id)), eligible.length - 1)
+  return Math.min(...doc.stack.map((id) => eligible.indexOf(id) - 1), eligible.length - 1)
 }
 
 export const stackBuilderMachine = setup({
