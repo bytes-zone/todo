@@ -51,7 +51,7 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      - run: apt-get install unzip
+      - run: apt-get update && apt-get install unzip
 
       - name: Setup Bun
         uses: oven-sh/setup-bun@v2.0.1
