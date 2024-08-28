@@ -1,6 +1,7 @@
 import { describe, expect, it } from "vitest"
 import { init, addTodo, toggleComplete, addToStack } from "./ops"
-import { eligibleTodos, startingIndex } from "./stackBuilderMachine"
+import { eligibleTodos, stackBuilderMachine, startingIndex } from "./stackBuilderMachine"
+import { createActor } from "xstate"
 
 describe("eligibleTodos", () => {
   it("should be empty if there are no todos", () => {
@@ -51,5 +52,22 @@ describe("startingIndex", () => {
     addToStack(doc, c)
 
     expect(startingIndex(doc, [a, b, c])).toEqual(1)
+  })
+})
+describe("stackBuilderMachine", () => {
+  it("should start in done if the doc is empty", () => {
+    const doc = init()
+    const machine = createActor(stackBuilderMachine, { input: doc })
+
+    expect(machine.getSnapshot().value).toEqual("done")
+  })
+
+  it("should start in reviewing if the doc has todos", () => {
+    const doc = init()
+    addTodo(doc, "A")
+
+    const machine = createActor(stackBuilderMachine, { input: doc })
+
+    expect(machine.getSnapshot().value).toEqual("reviewing")
   })
 })
