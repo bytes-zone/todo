@@ -125,4 +125,19 @@ describe("stackBuilderMachine", () => {
 
     expect(machine.getSnapshot().value).toEqual("reviewing")
   })
+
+  it("updates eligible todos when a new document is provided", async () => {
+    const doc = init()
+    const aId = addTodo(doc, "A")
+
+    const machine = createActor(stackBuilderMachine, { input: doc })
+    machine.start()
+
+    expect(machine.getSnapshot().context.eligible).toEqual([aId])
+
+    const bId = addTodo(doc, "B")
+    machine.send({ type: "newDoc", doc })
+
+    expect(machine.getSnapshot().context.eligible).toEqual([aId, bId])
+  })
 })
