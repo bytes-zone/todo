@@ -112,4 +112,17 @@ describe("stackBuilderMachine", () => {
 
     expect(machine.getSnapshot().value).toEqual("done")
   })
+
+  it("providing a new document will reset to reviewing if we were done", async () => {
+    const doc = init()
+    addTodo(doc, "A")
+
+    const machine = createActor(stackBuilderMachine, { input: doc })
+    machine.start()
+
+    machine.send({ type: "review", result: "yes" })
+    machine.send({ type: "newDoc", doc })
+
+    expect(machine.getSnapshot().value).toEqual("reviewing")
+  })
 })
