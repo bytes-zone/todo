@@ -100,4 +100,16 @@ describe("stackBuilderMachine", () => {
 
     expect(machine.getSnapshot().context.index).toEqual(before - 1)
   })
+
+  it("should transition to done if there are no more todos", async () => {
+    const doc = init()
+    addTodo(doc, "A")
+
+    const machine = createActor(stackBuilderMachine, { input: doc })
+    machine.start()
+
+    machine.send({ type: "review", result: "yes" })
+
+    expect(machine.getSnapshot().value).toEqual("done")
+  })
 })
