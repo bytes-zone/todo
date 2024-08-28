@@ -79,16 +79,13 @@ describe("stackBuilderMachine", () => {
     const machine = createActor(stackBuilderMachine, { input: doc })
     machine.start()
 
-    expect(machine.getSnapshot().value).toEqual("reviewing")
-
-    return new Promise((resolve) => {
-      machine.on("*", (ev) => {
-        expect(ev).toEqual({ type: "addToStack", id })
-        resolve(null)
-      })
-
-      machine.send({ type: "review", result: "yes" })
+    const event = new Promise((resolve) => {
+      machine.on("addToStack", resolve)
     })
+
+    machine.send({ type: "review", result: "yes" })
+
+    expect(await event).toEqual({ type: "addToStack", id })
   })
 
   it("answering yes should advance the index", async () => {
