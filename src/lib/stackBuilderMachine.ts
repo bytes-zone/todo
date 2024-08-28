@@ -1,4 +1,4 @@
-import { assign, emit, enqueueActions, setup } from "xstate"
+import { assign, enqueueActions, setup } from "xstate"
 import type { AppV1, TodoId } from "./types"
 
 export function eligibleTodos(doc: AppV1): TodoId[] {
