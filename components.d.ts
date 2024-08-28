@@ -11,6 +11,7 @@ declare module 'vue' {
     NewTodoForm: typeof import('./src/components/NewTodoForm.vue')['default']
     RouterLink: typeof import('vue-router')['RouterLink']
     RouterView: typeof import('vue-router')['RouterView']
+    StackBuilder: typeof import('./src/components/StackBuilder.vue')['default']
     TodoCompact: typeof import('./src/components/TodoCompact.vue')['default']
   }
 }

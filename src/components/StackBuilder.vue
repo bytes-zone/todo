@@ -1,15 +1,12 @@
 <script setup lang="ts">
-import { handle } from "@/lib/handle"
 import { stackBuilderMachine } from "@/lib/stackBuilderMachine"
-import { useDocument } from "@/lib/use-automerge"
+import type { AppV1 } from "@/lib/types"
 import { useMachine } from "@xstate/vue"
 import { watch } from "vue"
 
-const doc = await useDocument(handle)
+const { doc } = defineProps<{ doc: AppV1 }>()
 
-const { snapshot, send } = useMachine(stackBuilderMachine, {
-  input: doc.value,
-})
+const { snapshot, send } = useMachine(stackBuilderMachine, { input: doc })
 
 watch(doc, (newDoc) => {
   send({ type: "newDoc", doc: newDoc })
