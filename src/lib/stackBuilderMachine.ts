@@ -23,6 +23,17 @@ export const stackBuilderMachine = setup({
     events: {} as { type: "review"; result: "yes" | "no" } | { type: "newDoc"; doc: AppV1 },
     emitted: {} as { type: "addToStack"; id: TodoId },
   },
+  actions: {
+    addToStack: enqueueActions(({ enqueue, context, event }, params: "force" | undefined) => {
+      if ((event.type === "review" && event.result === "yes") || params === "force") {
+        const id = context.eligible[context.index]
+        enqueue.emit({ type: "addToStack", id })
+        enqueue.assign({ selected: ({ context }) => [...context.selected, id] })
+      }
+
+      enqueue.assign({ index: ({ context }) => context.index - 1 })
+    }),
+  },
 }).createMachine({
   context: ({ input }) => {
     const eligible = eligibleTodos(input)
@@ -46,21 +57,22 @@ export const stackBuilderMachine = setup({
   initial: "reviewing",
   states: {
     reviewing: {
-      always: {
-        guard: ({ context }) => context.index < 0,
-        target: "done",
-      },
+      always: [
+        {
+          guard: ({ context }) => context.index < 0,
+          target: "done",
+        },
+        {
+          guard: ({ context }) => context.selected.length === 0,
+          actions: {
+            type: "addToStack",
+            params: "force",
+          },
+        },
+      ],
       on: {
         review: {
-          actions: enqueueActions(({ enqueue, context, event }) => {
-            if (event.result === "yes") {
-              const id = context.eligible[context.index]
-              enqueue.emit({ type: "addToStack", id })
-              enqueue.assign({ selected: ({ context }) => [...context.selected, id] })
-            }
-
-            enqueue.assign({ index: ({ context }) => context.index - 1 })
-          }),
+          actions: "addToStack",
           target: ".",
         },
       },

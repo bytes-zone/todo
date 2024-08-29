@@ -1,4 +1,4 @@
-import { describe, expect, it } from "vitest"
+import { describe, expect, it, vi } from "vitest"
 import { init, addTodo, toggleComplete, addToStack } from "./ops"
 import { eligibleTodos, stackBuilderMachine, startingIndex } from "./stackBuilderMachine"
 import { createActor } from "xstate"
@@ -63,46 +63,59 @@ describe("stackBuilderMachine", () => {
     expect(machine.getSnapshot().value).toEqual("done")
   })
 
-  it("should start in reviewing if the doc has todos", () => {
+  it("should start in reviewing if the doc has more than one todo", () => {
     const doc = init()
     addTodo(doc, "A")
+    addTodo(doc, "B")
 
     const machine = createActor(stackBuilderMachine, { input: doc })
+    machine.start()
 
     expect(machine.getSnapshot().value).toEqual("reviewing")
   })
 
-  it("should emit a message to add to the stack if we accept a todo", async () => {
+  it("should automatically select the oldest todo if there are none selected", () => {
     const doc = init()
     const id = addTodo(doc, "A")
 
     const machine = createActor(stackBuilderMachine, { input: doc })
     machine.start()
 
-    const event = new Promise((resolve) => {
-      machine.on("addToStack", resolve)
-    })
+    expect(machine.getSnapshot().context.selected).toEqual([id])
+    expect(machine.getSnapshot().context.index).toEqual(-1)
+  })
 
-    machine.send({ type: "review", result: "yes" })
+  it("should emit a message that it has automatically accepted a todo", () => {
+    const doc = init()
+    const id = addTodo(doc, "A")
 
-    expect(await event).toEqual({ type: "addToStack", id })
+    const machine = createActor(stackBuilderMachine, { input: doc })
+
+    const spy = vi.fn()
+    machine.on("addToStack", spy)
+
+    machine.start()
+
+    expect(spy).toHaveBeenCalledWith({ type: "addToStack", id })
   })
 
   it("should add to the accepted todos if the answer is 'yes'", async () => {
     const doc = init()
-    const id = addTodo(doc, "A")
+    const id1 = addTodo(doc, "A")
+    const id2 = addTodo(doc, "B")
 
     const machine = createActor(stackBuilderMachine, { input: doc })
     machine.start()
 
     machine.send({ type: "review", result: "yes" })
 
-    expect(machine.getSnapshot().context.selected).toEqual([id])
+    expect(machine.getSnapshot().context.selected).toEqual([id2, id1])
   })
 
   it("reviewing should advance the index", async () => {
     const doc = init()
     addTodo(doc, "A")
+    addTodo(doc, "B")
 
     const machine = createActor(stackBuilderMachine, { input: doc })
     machine.start()
@@ -128,6 +141,7 @@ describe("stackBuilderMachine", () => {
   it("providing a new document will reset to reviewing if we were done", async () => {
     const doc = init()
     addTodo(doc, "A")
+    addTodo(doc, "B")
 
     const machine = createActor(stackBuilderMachine, { input: doc })
     machine.start()
