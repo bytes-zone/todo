@@ -1,7 +1,21 @@
 import { describe, expect, it } from "vitest"
 import * as ops from "./ops"
+import { next as A } from "@automerge/automerge"
+import type { AppV1 } from "./types"
 
 describe("init", () => {
+  it("initial bytes match the reference type", () => {
+    const bytes = A.save(
+      A.change(A.init<AppV1>({ actor: "00" }), { time: 0 }, (doc) => {
+        doc.todos = {}
+        doc.rootTodos = []
+        doc.stack = []
+      }),
+    )
+
+    expect(Array.from(bytes)).toEqual(Array.from(ops.initBytes))
+  })
+
   it("should have todos", () => {
     expect(ops.init().todos).toEqual({})
   })

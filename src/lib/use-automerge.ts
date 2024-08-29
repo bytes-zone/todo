@@ -7,7 +7,7 @@ import wasmUrl from "@automerge/automerge/automerge.wasm?url"
 
 const documentIdKey = "documentId"
 
-export async function init<T>(initialValue: T): Promise<DocHandle<T>> {
+export async function init<T>(initialValue: Uint8Array): Promise<DocHandle<T>> {
   await A.initializeWasm(wasmUrl)
 
   const repo = new Repo({
@@ -19,7 +19,7 @@ export async function init<T>(initialValue: T): Promise<DocHandle<T>> {
   if (documentId) {
     return repo.find(documentId as AnyDocumentId)
   } else {
-    const handle = repo.create(initialValue)
+    const handle = repo.import(initialValue) as DocHandle<T>
     localStorage.setItem(documentIdKey, handle.documentId)
     return handle
   }
