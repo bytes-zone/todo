@@ -9,6 +9,10 @@ describe("init", () => {
   it("should have root todos", () => {
     expect(ops.init().rootTodos).toEqual([])
   })
+
+  it("should have the current stack", () => {
+    expect(ops.init().stack).toEqual([])
+  })
 })
 
 describe("addTodo", () => {
@@ -50,5 +54,90 @@ describe("completeTodo", () => {
     ops.toggleComplete(state, newId)
 
     expect(state.todos[newId].completed).toBeNull()
+  })
+
+  it("if the todo was on the stack, completing it removes it", () => {
+    const state = ops.init()
+    const newId = ops.addTodo(state, "Hey there")
+
+    ops.addToStack(state, newId)
+    ops.toggleComplete(state, newId)
+
+    expect(state.stack).not.toContain(newId)
+  })
+})
+
+describe("addToStack", () => {
+  it("should add a todo to the stack", () => {
+    const state = ops.init()
+    const newId = ops.addTodo(state, "Hey there")
+
+    ops.addToStack(state, newId)
+
+    expect(state.stack).toContain(newId)
+  })
+
+  it("should add multiple todos to the stack", () => {
+    const state = ops.init()
+    const id1 = ops.addTodo(state, "Todo 1")
+    const id2 = ops.addTodo(state, "Todo 2")
+    const id3 = ops.addTodo(state, "Todo 3")
+
+    ops.addToStack(state, id1)
+    ops.addToStack(state, id2)
+    ops.addToStack(state, id3)
+
+    expect(state.stack).toContain(id1)
+    expect(state.stack).toContain(id2)
+    expect(state.stack).toContain(id3)
+  })
+
+  it("should not add duplicate todos to the stack", () => {
+    const state = ops.init()
+    const newId = ops.addTodo(state, "Hey there")
+
+    ops.addToStack(state, newId)
+    ops.addToStack(state, newId)
+
+    expect(state.stack.filter((id) => id === newId)).toHaveLength(1)
+  })
+})
+
+describe("removeFromStack", () => {
+  it("should remove a todo from the stack", () => {
+    const state = ops.init()
+    const newId = ops.addTodo(state, "Hey there")
+
+    ops.addToStack(state, newId)
+    expect(state.stack).toContain(newId)
+
+    ops.removeFromStack(state, newId)
+    expect(state.stack).not.toContain(newId)
+  })
+
+  it("should remove the correct todo from the stack", () => {
+    const state = ops.init()
+    const id1 = ops.addTodo(state, "Todo 1")
+    const id2 = ops.addTodo(state, "Todo 2")
+    const id3 = ops.addTodo(state, "Todo 3")
+
+    ops.addToStack(state, id1)
+    ops.addToStack(state, id2)
+    ops.addToStack(state, id3)
+
+    ops.removeFromStack(state, id2)
+
+    expect(state.stack).toContain(id1)
+    expect(state.stack).not.toContain(id2)
+    expect(state.stack).toContain(id3)
+  })
+
+  it("should not remove a todo from the stack if it is not present", () => {
+    const state = ops.init()
+    const newId = ops.addTodo(state, "Hey there")
+
+    ops.removeFromStack(state, newId)
+
+    expect(state.stack).not.toContain(newId)
   })
 })

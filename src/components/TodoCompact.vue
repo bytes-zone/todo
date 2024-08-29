@@ -3,6 +3,7 @@ import { type TodoId, type TodoV1 } from "../lib/types"
 
 defineProps<{
   todo: TodoV1
+  highlighted?: boolean
 }>()
 
 defineEmits<{
@@ -20,5 +21,6 @@ defineEmits<{
       @change="$emit('toggleComplete', todo.id)"
     />
     <span :class="todo.completed ? 'opacity-50 line-through' : ''">{{ todo.title }}</span>
+    <template v-if="highlighted">⭐️</template>
   </div>
 </template>

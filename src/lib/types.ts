@@ -24,4 +24,5 @@ export interface TodoV1 {
 export interface AppV1 {
   todos: { [id: string]: TodoV1 }
   rootTodos: OrderedTodos
+  stack: OrderedTodos
 }

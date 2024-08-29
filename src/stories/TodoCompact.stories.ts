@@ -36,3 +36,9 @@ export const Done: Story = {
     },
   },
 }
+
+export const Highlighted: Story = {
+  args: {
+    highlighted: true,
+  },
+}
