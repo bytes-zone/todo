@@ -20,10 +20,10 @@ actorRef.on("addToStack", ({ id }) => emit("addToStack", id))
 </script>
 
 <template>
-  <template v-if="snapshot.matches('reviewing')">
+  <div v-if="snapshot.matches('reviewing')" class="flex gap-2 mb-2">
     <button @click="send({ type: 'review', result: 'yes' })" class="btn btn-neutral">Yes</button>
     <button @click="send({ type: 'review', result: 'no' })" class="btn btn-neutral">No</button>
-  </template>
+  </div>
 
   <ul class="flex gap-2 flex-col">
     <li
