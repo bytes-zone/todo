@@ -1,16 +1,22 @@
 <script setup lang="ts">
 import { stackBuilderMachine } from "@/lib/stackBuilderMachine"
-import type { AppV1 } from "@/lib/types"
+import type { AppV1, TodoId } from "@/lib/types"
 import { useMachine } from "@xstate/vue"
 import { watch } from "vue"
 
 const { doc } = defineProps<{ doc: AppV1 }>()
 
-const { snapshot, send } = useMachine(stackBuilderMachine, { input: doc })
+const emit = defineEmits<{
+  addToStack: [id: TodoId]
+}>()
+
+const { snapshot, send, actorRef } = useMachine(stackBuilderMachine, { input: doc })
 
 watch(doc, (newDoc) => {
   send({ type: "newDoc", doc: newDoc })
 })
+
+actorRef.on("addToStack", ({ id }) => emit("addToStack", id))
 </script>
 
 <template>

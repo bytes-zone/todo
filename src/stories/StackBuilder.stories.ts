@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from "@storybook/vue3"
-import { within } from "@storybook/test"
+import { fn, within } from "@storybook/test"
 import StackBuilder from "@/components/StackBuilder.vue"
 import { addTodo, init } from "@/lib/ops"
 
@@ -11,7 +11,10 @@ titles.forEach((title) => addTodo(doc, title))
 const meta = {
   tags: ["autodocs"],
   component: StackBuilder,
-  args: { doc },
+  args: {
+    doc,
+    onAddToStack: fn(),
+  },
 } satisfies Meta<typeof StackBuilder>
 
 export default meta
