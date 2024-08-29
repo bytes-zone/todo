@@ -30,8 +30,7 @@ actorRef.on("addToStack", ({ id }) => emit("addToStack", id))
       v-for="(id, i) in snapshot.context.eligible.filter((_, i) => i >= snapshot.context.index)"
       :key="id"
     >
-      <template v-if="snapshot.context.eligible[snapshot.context.index] === id">⭐️</template>
-      <TodoCompact :todo="doc.todos[id]" />
+      <TodoCompact :todo="doc.todos[id]" :highlighted="doc.stack.includes(id)" />
     </li>
   </ul>
 </template>
