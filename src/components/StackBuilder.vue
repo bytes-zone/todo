@@ -20,7 +20,7 @@ actorRef.on("addToStack", ({ id }) => emit("addToStack", id))
 </script>
 
 <template>
-  <div v-if="snapshot.matches('reviewing')" class="card w-96 bg-neutral">
+  <div v-if="snapshot.matches('reviewing')" class="card w-96 bg-neutral text-secondary-content">
     <div class="card-body items-center text-center">
       <div class="flex justify-center p-4">
         <TodoCompact :todo="doc.todos[snapshot.context.eligible[snapshot.context.index]]" />
