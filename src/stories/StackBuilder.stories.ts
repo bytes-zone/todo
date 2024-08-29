@@ -1,9 +1,9 @@
 import type { Meta, StoryObj } from "@storybook/vue3"
 import { fn, within } from "@storybook/test"
 import StackBuilder from "@/components/StackBuilder.vue"
-import { addTodo, init } from "@/lib/ops"
+import { addTodo, testInit } from "@/lib/ops"
 
-const doc = init()
+const doc = testInit()
 
 const titles = ["Clean the carpets", "Install the new warp core", "World domination"]
 titles.forEach((title) => addTodo(doc, title))
