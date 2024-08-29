@@ -16,6 +16,20 @@ export function initialize(doc: Partial<AppV1>): void {
   doc.stack = []
 }
 
+export function migrate(doc: Partial<AppV1>): void {
+  if (!("todos" in doc)) {
+    doc.todos = {}
+  }
+
+  if (!("rootTodos" in doc)) {
+    doc.rootTodos = []
+  }
+
+  if (!("stack" in doc)) {
+    doc.stack = []
+  }
+}
+
 export function testInit(): AppV1 {
   const doc = {} as AppV1
   initialize(doc)

@@ -20,6 +20,24 @@ describe("init", () => {
   })
 })
 
+describe("migrate", () => {
+  it("adds rootTodos if it was not present", () => {
+    const doc = {} as AppV1
+
+    ops.migrate(doc)
+
+    expect(doc.rootTodos).toEqual([])
+  })
+
+  it("migrates stack to rootTodos", () => {
+    const doc = {} as AppV1
+
+    ops.migrate(doc)
+
+    expect(doc.stack).toEqual([])
+  })
+})
+
 describe("addTodo", () => {
   it("should add a todo", () => {
     const state = ops.testInit()

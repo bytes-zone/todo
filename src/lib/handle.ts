@@ -4,3 +4,7 @@ import type { AppV1 } from "./types"
 import type { DocHandle } from "@automerge/automerge-repo/slim"
 
 export const handle: DocHandle<AppV1> = await init(ops.initBytes)
+
+handle.whenReady().then(() => {
+  handle.change(ops.migrate)
+})
