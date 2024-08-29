@@ -10,12 +10,16 @@ export const initBytes = Uint8Array.from([
   2, 2, 127, 0, 3, 0, 3, 0, 0,
 ])
 
-export function init(): AppV1 {
-  return {
-    todos: {},
-    rootTodos: [],
-    stack: [],
-  }
+export function initialize(doc: Partial<AppV1>): void {
+  doc.todos = {}
+  doc.rootTodos = []
+  doc.stack = []
+}
+
+export function testInit(): AppV1 {
+  const doc = {} as AppV1
+  initialize(doc)
+  return doc
 }
 
 export function addTodo(doc: AppV1, title: string): TodoId {

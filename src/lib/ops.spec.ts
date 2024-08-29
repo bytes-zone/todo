@@ -5,33 +5,24 @@ import type { AppV1 } from "./types"
 
 describe("init", () => {
   it("initial bytes match the reference type", () => {
-    const bytes = A.save(
-      A.change(A.init<AppV1>({ actor: "00" }), { time: 0 }, (doc) => {
-        doc.todos = {}
-        doc.rootTodos = []
-        doc.stack = []
-      }),
-    )
+    const bytes = A.save(A.change(A.init<AppV1>({ actor: "00" }), { time: 0 }, ops.initialize))
 
     expect(Array.from(bytes)).toEqual(Array.from(ops.initBytes))
   })
 
-  it("should have todos", () => {
-    expect(ops.init().todos).toEqual({})
-  })
+  it("initialize should set empty versions of all relevant fields", () => {
+    const doc = {} as AppV1
+    ops.initialize(doc)
 
-  it("should have root todos", () => {
-    expect(ops.init().rootTodos).toEqual([])
-  })
-
-  it("should have the current stack", () => {
-    expect(ops.init().stack).toEqual([])
+    expect(doc.todos).toEqual({})
+    expect(doc.rootTodos).toEqual([])
+    expect(doc.stack).toEqual([])
   })
 })
 
 describe("addTodo", () => {
   it("should add a todo", () => {
-    const state = ops.init()
+    const state = ops.testInit()
 
     const newId = ops.addTodo(state, "Hey there")
     const newTodo = state.todos[newId]
@@ -41,7 +32,7 @@ describe("addTodo", () => {
   })
 
   it("should add the todo to the root list", () => {
-    const state = ops.init()
+    const state = ops.testInit()
 
     const newId = ops.addTodo(state, "Hey there")
 
@@ -52,7 +43,7 @@ describe("addTodo", () => {
 
 describe("completeTodo", () => {
   it("should mark a todo as complete", () => {
-    const state = ops.init()
+    const state = ops.testInit()
     const newId = ops.addTodo(state, "Hey there")
 
     ops.toggleComplete(state, newId)
@@ -61,7 +52,7 @@ describe("completeTodo", () => {
   })
 
   it("should mark a todo as incomplete", () => {
-    const state = ops.init()
+    const state = ops.testInit()
     const newId = ops.addTodo(state, "Hey there")
 
     ops.toggleComplete(state, newId)
@@ -71,7 +62,7 @@ describe("completeTodo", () => {
   })
 
   it("if the todo was on the stack, completing it removes it", () => {
-    const state = ops.init()
+    const state = ops.testInit()
     const newId = ops.addTodo(state, "Hey there")
 
     ops.addToStack(state, newId)
@@ -83,7 +74,7 @@ describe("completeTodo", () => {
 
 describe("addToStack", () => {
   it("should add a todo to the stack", () => {
-    const state = ops.init()
+    const state = ops.testInit()
     const newId = ops.addTodo(state, "Hey there")
 
     ops.addToStack(state, newId)
@@ -92,7 +83,7 @@ describe("addToStack", () => {
   })
 
   it("should add multiple todos to the stack", () => {
-    const state = ops.init()
+    const state = ops.testInit()
     const id1 = ops.addTodo(state, "Todo 1")
     const id2 = ops.addTodo(state, "Todo 2")
     const id3 = ops.addTodo(state, "Todo 3")
@@ -107,7 +98,7 @@ describe("addToStack", () => {
   })
 
   it("should not add duplicate todos to the stack", () => {
-    const state = ops.init()
+    const state = ops.testInit()
     const newId = ops.addTodo(state, "Hey there")
 
     ops.addToStack(state, newId)
@@ -119,7 +110,7 @@ describe("addToStack", () => {
 
 describe("removeFromStack", () => {
   it("should remove a todo from the stack", () => {
-    const state = ops.init()
+    const state = ops.testInit()
     const newId = ops.addTodo(state, "Hey there")
 
     ops.addToStack(state, newId)
@@ -130,7 +121,7 @@ describe("removeFromStack", () => {
   })
 
   it("should remove the correct todo from the stack", () => {
-    const state = ops.init()
+    const state = ops.testInit()
     const id1 = ops.addTodo(state, "Todo 1")
     const id2 = ops.addTodo(state, "Todo 2")
     const id3 = ops.addTodo(state, "Todo 3")
@@ -147,7 +138,7 @@ describe("removeFromStack", () => {
   })
 
   it("should not remove a todo from the stack if it is not present", () => {
-    const state = ops.init()
+    const state = ops.testInit()
     const newId = ops.addTodo(state, "Hey there")
 
     ops.removeFromStack(state, newId)
