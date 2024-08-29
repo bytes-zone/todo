@@ -25,10 +25,11 @@ actorRef.on("addToStack", ({ id }) => emit("addToStack", id))
     <button @click="send({ type: 'review', result: 'no' })" class="btn btn-neutral">No</button>
   </template>
 
-  {{ snapshot.context }}
-
-  <ul>
-    <li v-for="id in snapshot.context.eligible" :key="id">
+  <ul class="flex gap-2 flex-col">
+    <li
+      v-for="(id, i) in snapshot.context.eligible.filter((_, i) => i >= snapshot.context.index)"
+      :key="id"
+    >
       <template v-if="snapshot.context.eligible[snapshot.context.index] === id">⭐️</template>
       <TodoCompact :todo="doc.todos[id]" />
     </li>
