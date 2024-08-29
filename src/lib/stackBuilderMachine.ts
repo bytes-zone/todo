@@ -17,6 +17,7 @@ export const stackBuilderMachine = setup({
     context: {} as {
       index: number
       eligible: TodoId[]
+      selected: TodoId[]
     },
     input: {} as AppV1,
     events: {} as { type: "review"; result: "yes" | "no" } | { type: "newDoc"; doc: AppV1 },
@@ -27,7 +28,7 @@ export const stackBuilderMachine = setup({
     const eligible = eligibleTodos(input)
     const index = startingIndex(input, eligible)
 
-    return { eligible, index }
+    return { eligible, index, selected: input.stack }
   },
   on: {
     newDoc: {
@@ -36,6 +37,7 @@ export const stackBuilderMachine = setup({
         return {
           eligible,
           index: context.index < 0 ? startingIndex(event.doc, eligible) : context.index,
+          selected: event.doc.stack,
         }
       }),
       target: ".reviewing",
@@ -52,7 +54,9 @@ export const stackBuilderMachine = setup({
         review: {
           actions: enqueueActions(({ enqueue, context, event }) => {
             if (event.result === "yes") {
-              enqueue.emit({ type: "addToStack", id: context.eligible[context.index] })
+              const id = context.eligible[context.index]
+              enqueue.emit({ type: "addToStack", id })
+              enqueue.assign({ selected: ({ context }) => [...context.selected, id] })
             }
 
             enqueue.assign({ index: ({ context }) => context.index - 1 })

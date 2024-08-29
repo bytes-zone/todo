@@ -88,6 +88,18 @@ describe("stackBuilderMachine", () => {
     expect(await event).toEqual({ type: "addToStack", id })
   })
 
+  it("should add to the accepted todos if the answer is 'yes'", async () => {
+    const doc = init()
+    const id = addTodo(doc, "A")
+
+    const machine = createActor(stackBuilderMachine, { input: doc })
+    machine.start()
+
+    machine.send({ type: "review", result: "yes" })
+
+    expect(machine.getSnapshot().context.selected).toEqual([id])
+  })
+
   it("reviewing should advance the index", async () => {
     const doc = init()
     addTodo(doc, "A")
